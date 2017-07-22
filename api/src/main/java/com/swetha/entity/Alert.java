@@ -1,12 +1,18 @@
 package com.swetha.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "Alert.findOne",
+				query = "SELECT a1 FROM Alert a1 WHERE a1.vinNo=:paramVin"),
+		@NamedQuery(name = "Alert.findRecentHighAlerts",
+				query = "SELECT a2 FROM Alert a2 WHERE a2.alertStatus=:paramStatus")
+})
 public class Alert {
 
 	@Id
@@ -16,6 +22,7 @@ public class Alert {
 	private String vinNo;
 	private String alertStatus;
 	private String msg;
+	private String timeAlertGenerated;
 
 	public Alert() {
 		this.id = UUID.randomUUID()
@@ -54,4 +61,11 @@ public class Alert {
 		this.msg = msg;
 	}
 
+	public String getTimeAlertGenerated() {
+		return timeAlertGenerated;
+	}
+
+	public void setTimeAlertGenerated(String timeAlertGenerated) {
+		this.timeAlertGenerated = timeAlertGenerated;
+	}
 }

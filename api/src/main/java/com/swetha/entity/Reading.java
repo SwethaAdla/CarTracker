@@ -5,8 +5,14 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "Reading.findAll",
+				query = "SELECT r FROM Reading r ORDER BY r.timestamp ASC"),
+		@NamedQuery(name = "Reading.findLoc",
+				query = "SELECT r FROM Reading r WHERE r.vin=:paramVin")
+})
 public class Reading {
-	
+
 	@Id
 	@Column(columnDefinition = "VARCHAR(36)")
 	private String id;

@@ -12,7 +12,7 @@ import java.util.List;
  * Created by sweth on 6/28/2017.
  */
 
-@CrossOrigin(origins = "http://mocker.egen.io",maxAge = 3600)
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping(value = "/vehicles")
 public class VehicleController {
@@ -35,7 +35,7 @@ public class VehicleController {
     @RequestMapping(method= RequestMethod.PUT, consumes= MediaType.APPLICATION_JSON_UTF8_VALUE, produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Vehicle> create(@RequestBody List<Vehicle> v){
         for(Vehicle v1 :v) {
-           System.out.println(v1.getVin());
+            System.out.println(v1.getVin());
             vehicleService.create(v1);
         }
         return v;
