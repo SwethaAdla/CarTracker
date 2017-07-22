@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/myStyle.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/JS/alert.js"></script>
+    <script src="/JS/vehicle.js"></script>
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIEyQPMD0ogRPXp0uc_KSOStMuBDkrCTg"></script>
+    <script src="/JS/history.js"></script>
+    <script src="/JS/map.js"></script>
+    <script>
+        function selectvin(){
+            $.ajax({
+                url:"http://localhost:8080/readings/vin",
+                type: "GET",
+                crossDomain: true,
+                success: onSuccess,
+                error: function(e){
+                    console.log(e);
+                    alert("error - "+e);
+                },
+            });
+        }
+    </script>
+</head>
+<title> Egen </title>
+<body>
+<div class="container text-warning" style="text-align:center; text-color:blue"> <h1> Vehicle Details</h1></div>
+<div class="container text-warning" style="text-align:center; text-color:blue">
+    <button type="button" class="btn btn_info btn_fill"  onclick="submit()">Fetch all vehicles</button>
+    <button type="button" class="btn btn_info btn_fill"  onclick="showButton()">View all Alerts for a specific vehicle</button>
+    <button type="button" class="btn btn_info btn_fill"  onclick="showHighAlerts()">View high Alerts</button>
+    <button type="button" class="btn btn_info btn_fill"  onclick="history()">History of Alerts</button>
+    <button type="button" class="btn btn_info btn_fill"  onclick="maps()">Maps</button>
+</div>
+
+
+
+<div class="container bg-primary col-sm-12">
+    <table class="table col-sm-8" id="table">
+        <thead>
+        <tr>
+            <th>Vin No</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>RedLineRPM</th>
+            <th>MaxFuelVolume</th>
+            <th>Last Service Date</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div class="container col-sm-12" style="text-align:center; text-color:blue">
+    <div class="dropdown" id="drpdwn" hidden="true">
+        <select id="vehicleVinList" class="form-control col-sm-6" onchange="selectVin()"></select>
+        <table class="table col-sm-6" id="alertstable" style="text-align:center; text-color:blue">
+            <thead>
+            <tr>
+                <th>Vin No</th>
+                <th>status</th>
+                <th>msg</th>
+                <th>TimeGenerated</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="container" style="text-align:center; text-color:blue">
+        <table class="table  col-sm-6" id="highalertstable" hidden="true" style="text-align:center; text-color:blue">
+            <thead>
+            <tr>
+                <th>Vin No</th>
+                <th>No of High alerts</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+</div>
+<div id="chart_div" hidden="true"></div>
+<div id="chart_div2" hidden="true"></div>
+<div id="chart_div3" hidden="true"></div>
+<div id="map"></div>
+
+</body>
+
+
+
+</html>
